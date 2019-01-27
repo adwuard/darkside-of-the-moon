@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+
+    <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8"/>
+    <title>Dark Side Of the Moon Online Music Store</title>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css"/>
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" th:href="@{'/css/normalize.css'}"/>
+    <link rel="stylesheet" th:href="@{'/css/skeleton.css'}"/>
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" th:href="@{'/images/favicon.png'}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{'/css/main.css'}"/>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header th:include="layout :: header"></header>
+
+<section>
+    <div class="row">
+        <div class="twelve columns">
+            <h2>Here is our inventory</h2>
+
+            <form method="post" th:action="@{'/'}">
+                <h3>Filter</h3>
+                <div class="row">
+                    <div class="three columns"><label for="albumName">Album Name: </label></div>
+                    <div class="nine columns"><input id="albumName" name="albumName" /></div>
+                </div>
+                <div class="row">
+                    <div class="three columns">&nbsp;</div>
+                    <div class="nine columns"><button  class="btn btn-default" type="submit">Submit</button></div>
+                </div>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>ID</th>
+                    <th>Album</th>
+                    <th>Artist</th>
+                    <th>Release Date</th>
+                    <th>Genres</th>
+                    <th>Tracks</th>
+                    <th>Price</th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                <td><a th:if="${#httpServletRequest.remoteUser}" th:href="@{'/admin/albums/add'}">Add Album</a></td>
+
+                <tr th:each="album : ${albums}">
+                    <td><a th:if="${#httpServletRequest.remoteUser}" th:href="@{'/admin/albums/edit/' + ${album.id}}">Edit</a></td>
+                    <td><a th:if="${#httpServletRequest.remoteUser}" th:href="@{'/admin/albums/delete/' + ${album.id}}">Delete</a></td>
+                    <td><p th:text="${album.id}"/></td>
+                    <td><p th:text="${album.albumName}"/></td>
+                    <td><p th:text="${album.albumArtist}"/></td>
+                    <td><p th:text="${album.releaseDate}"/></td>
+                    <td><p th:text="${album.genre}"/></td>
+                    <td><p th:text="${album.numOfTracks}"/></td>
+                    <td><p th:text="${album.price}"/></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<footer th:include="layout :: footer"></footer>
+
+
+</body>
+</html>
